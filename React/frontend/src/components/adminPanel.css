@@ -14,55 +14,14 @@ html,
   overflow-x: hidden;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 16px; /* Reduced font size */
-}
-
-.user-dropdown {
-  position: relative;
-  cursor: pointer;
-}
-
-.username {
-  font-size: 14px; /* Reduced font size */
-}
-
-.user-dropdown:hover .dropdown-menu {
-  display: block;
-  opacity: 1;
-}
-
-.dropdown-menu {
-  display: none;
-  /* position: absolute; */
-  right: 0;
-  top: 28px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-}
-
-.logout-button {
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-}
-
-.logout-button:hover {
-  background-color: #f0f0f0;
-}
-
-/* Search Bar */
 .search-bar {
   padding: 16px 32px;
-  width: 100%;
+  width: 50%;
   box-sizing: border-box;
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+  margin: 0 auto;
 }
 
 .search-bar input {
@@ -73,7 +32,15 @@ html,
   border: 1px solid #ccc;
 }
 
-/* User Table */
+.search-button {
+  background-color: #2563eb;
+  color: #f4f4f4;
+}
+
+.search-button:hover {
+  background-color: #1d4ed8;
+}
+
 .user-table-container {
   padding: 0 32px 32px;
   overflow-x: auto;
@@ -112,4 +79,16 @@ html,
 
 .delete-icon {
   color: #ef4444;
+}
+
+.add-user-container {
+  display: flex;
+  justify-content: end;
+  padding-right: 20%;
+  padding-bottom: 20px;
+}
+
+.add-user-button {
+  background-color: #2563eb;
+  color: #f4f4f4;
 }

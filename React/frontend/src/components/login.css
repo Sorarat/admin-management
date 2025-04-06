@@ -12,14 +12,14 @@
 /* Left panel */
 .left {
   left: 0;
-  background-color: #1f2937; /* dark gray */
+  background-color: #1f2937;
   color: white;
 }
 
 /* Right panel */
 .right {
   right: 0;
-  background-color: #f9fafb; /* light gray */
+  background-color: #f9fafb;
 }
 
 /* Center content */
@@ -31,7 +31,6 @@
   text-align: center;
 }
 
-/* Login box styling */
 .login-box {
   background-color: white;
   padding: 30px;
