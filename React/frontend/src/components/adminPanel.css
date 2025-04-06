@@ -1,0 +1,115 @@
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.admin-panel {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 16px; /* Reduced font size */
+}
+
+.user-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.username {
+  font-size: 14px; /* Reduced font size */
+}
+
+.user-dropdown:hover .dropdown-menu {
+  display: block;
+  opacity: 1;
+}
+
+.dropdown-menu {
+  display: none;
+  /* position: absolute; */
+  right: 0;
+  top: 28px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Search Bar */
+.search-bar {
+  padding: 16px 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* User Table */
+.user-table-container {
+  padding: 0 32px 32px;
+  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.user-table th,
+.user-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-table th {
+  background-color: #f0f0f0;
+}
+
+.icon {
+  margin-right: 12px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.edit-icon {
+  color: #3b82f6;
+}
+
+.delete-icon {
+  color: #ef4444;
+}
