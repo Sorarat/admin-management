@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import './adminPanel.css';
 import Navbar from './navbar';
 import { useNavigate } from 'react-router-dom';
+import { getAllUsers, deleteUser } from '../api';
 
 const AdminPanel = () => {
+  const [users, setUsers ] = useState([]);
   const [search, setSearch] = useState('');
-  const users= [
-    { id: 1, username: 'johndoe', email: 'john@example.com', phone: '12345678' },
-    { id: 2, username: 'janedoe', email: 'jane@example.com', phone: '87654321' },
-    { id: 3, username: 'harryp2', email: 'harry@example.com', phone: '5467657' },
-    { id: 4, username: 'ronw23', email: 'ron@example.com', phone: '34453668' },
-    { id: 5, username: 'hermioneg54', email: 'hermione@example.com', phone: '45465745' },
-    { id: 6, username: 'dracom3', email: 'dracom3@example.com', phone: '345439605' },
-  ];
-
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchedUsers = async () => {
+      try {
+        const data = await getAllUsers();
+        setUsers(data);
+
+      } catch(error) {
+        console.error("Failed to fetch users: ", error);
+      }
+    };
+
+    fetchedUsers();
+
+  }, []);
   
   const handleAddUser = () => {
     console.log('navigation to add  new user page ....')
@@ -27,11 +35,17 @@ const AdminPanel = () => {
     navigate('/update-user', {state: {user}});
   }
 
-  const handleDeleteUser = (user) => {
+  const handleDeleteUser = async (user) => {
     console.log('deleting user...')
     const isConfirmed = window.confirm(`Are you sure you want to delete user ${user.username}?`);
     if (isConfirmed) {
-      console.log(`User ${user.username} is deleted.`);
+      try {
+        await deleteUser(user.id);
+        setUsers((prevUsers) => prevUsers.filter(u => u.id !== user.id)); 
+        console.log(`Succesfully deleting ${user.username}`);
+      } catch(error) {
+        console.error("Error deleting user", error);
+      }
     }
   };
 
@@ -41,6 +55,9 @@ const AdminPanel = () => {
     user.email.toLowerCase().includes(search.toLowerCase())
   );
 
+  if (users.length === 0) {
+    return <div>No users found.</div>
+  }
   return (
     <div className="admin-panel">
      <Navbar/>

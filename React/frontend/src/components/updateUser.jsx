@@ -2,17 +2,18 @@ import React from 'react'
 import Navbar from './navbar';
 import './updateUser.css';
 import { useState, useEffect } from 'react';
-import { useLocation} from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
+import { updateUser } from '../api'; 
 
 const UpdateUser = () => {
 
   const location = useLocation();
   const { user } = location.state;
+  const navigate = useNavigate();
 
  const [formData, setFormData] = useState({
     username: user.username || '',
     email: user.email || '',
-    password: '',
     phone: user.phone || ''
   });
 
@@ -28,10 +29,21 @@ const UpdateUser = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Updaing user with data:', formData);
+    
+    try {
+      const updatedUser = await updateUser(user.id, formData);
+      console.log('Updating user..', updatedUser);
+      alert('User updated successfully');
+      navigate('/panel');
+      
+    } catch(error) {
+      console.error('Error updating user', error);
+      alert('Failed to update user. Please try again.');
+    }
   };
+
 
   return (
     <div className='add-new-user'>
@@ -55,16 +67,6 @@ const UpdateUser = () => {
               type="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
               onChange={handleChange}
               required
             />

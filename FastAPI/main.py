@@ -1,19 +1,40 @@
 from fastapi import FastAPI, Depends, status
-from pydantic import BaseModel
-from typing import Annotated, List
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+from typing import Annotated, List, Optional
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from userService import UserService
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+)
 models.Base.metadata.create_all(bind=engine)
 
+# User creation schema (password required)
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    phone: str
+    password: str  
+
+# User update schema (password optional)
 class UserBase(BaseModel):
     username: str
     email: str
     phone: str
-    password: str
+    password: Optional[str] = Field(None, title="Password", description="Password is optional for update.")
 
 class UserResponse(BaseModel):
     id: int
@@ -34,7 +55,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 @app.post("/users/", status_code=status.HTTP_201_CREATED)
-async def create_user(user: UserBase, db: db_dependency):
+async def create_user(user: UserCreate, db: db_dependency):
     user_service = UserService(db)
     return user_service.create_user(user.username, user.email, user.phone, user.password)
 

@@ -2,6 +2,8 @@ import React from 'react'
 import Navbar from './navbar';
 import './addNewUser.css';
 import { useState } from 'react';
+import { createUser} from '../api';
+import { useNavigate } from 'react-router-dom';
 
 const AddNewUser = () => {
 
@@ -12,13 +14,26 @@ const AddNewUser = () => {
     phone: ''
   });
 
+  const navigate = useNavigate();
+
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Creating user with data:', formData);
+
+    try {
+      const newUser = await createUser(formData);
+      console.log ('Created user:', newUser);
+      alert('User created successfully');
+      navigate('/panel');
+
+    } catch (error) {
+      console.error('Error creating user', error);
+      alert('Failed to create new user. Please try again.');
+    }
   };
 
   return (
@@ -67,7 +82,13 @@ const AddNewUser = () => {
               required
             />
           </label>
-          <button type="submit" className="create-user-button">Create User</button>
+
+          <button 
+            type="submit" 
+            className="create-user-button"
+            >
+              Create User
+            </button>
         </form>
       </div>
     </div>
