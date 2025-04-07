@@ -3,7 +3,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import './adminPanel.css';
 import Navbar from './navbar';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers, deleteUser } from '../api';
+import { getAllUsers, deleteUser, getAuthHeader } from '../api';
 
 const AdminPanel = () => {
   const [users, setUsers ] = useState([]);

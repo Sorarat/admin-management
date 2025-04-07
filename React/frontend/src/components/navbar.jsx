@@ -7,7 +7,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    console.log('Logging out...');
+    localStorage.removeItem('token');
     navigate('/');
   };
 
@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="logo">AdminForge</div>
       <div className="user-dropdown">
         <span className="username" onClick={() => setShowDropdown(!showDropdown)}>
-          admin ▾
+        {localStorage.getItem("username")} ▾
         </span>
         {showDropdown && (
           <div className="dropdown-menu">

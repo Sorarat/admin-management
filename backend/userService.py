@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from models import User
-from security import hash_password
 from fastapi import HTTPException, status
+import bcrypt
 
 class UserService:
     def __init__(self, db:Session):
@@ -63,3 +63,10 @@ class UserService:
         self.db.commit()
         return {"message": "User deleted successfully"}
     
+    def authenticate_user(self, username:str, password:str):
+        user = self.db.query(User).filter(User.username == username).first()
+        if not user:
+            return None
+        if not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+            return None
+        return user
