@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, status, HTTPException
+from fastapi import FastAPI, Depends, status, HTTPException, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Annotated, List, Optional
@@ -11,6 +11,8 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import os
+from chat_manager import ConnectionManager
+import json
 
 # load environment variables
 load_dotenv()
@@ -18,6 +20,8 @@ load_dotenv()
 app = FastAPI()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+manager = ConnectionManager()
 
 origins = [
     "http://localhost:5173",
@@ -136,3 +140,38 @@ async def delete_user(user_id: int, db:db_dependency, payload: dict = Depends(ve
     user_service = UserService(db)
     user_service.delete_user(user_id)
     return {"message": "User deleted successfully"}
+
+
+@app.websocket("/ws/{user_id}")
+async def websocket_endpoint(websocket: WebSocket, user_id: int, db: db_dependency):
+    user_service = UserService(db)
+    user = user_service.get_user(user_id)
+    
+    if not user:
+        await websocket.send_text("User not found.")
+        return
+    
+    await manager.connect(user_id, websocket)
+
+    try:
+        while True:
+            data = await websocket.receive_text()
+            
+            try:
+                message_data = json.loads(data)
+                msg = message_data.get("message")
+                sender = message_data.get("sender")
+            except (json.JSONDecodeError, AttributeError):
+                await websocket.send_text("Invalid message format.")
+                continue
+
+            if msg and sender:
+                await manager.send_personal_message(f"You wrote: {msg}", websocket)
+                await manager.broadcast(f"{sender} says: {msg}")
+            else:
+                await websocket.send_text("Missing message or sender.")
+
+    except Exception as e:
+        manager.disconnect(user_id)
+        await manager.broadcast(f"{sender} has left the chat")
+

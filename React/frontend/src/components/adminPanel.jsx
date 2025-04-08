@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaComments } from 'react-icons/fa';
 import './adminPanel.css';
 import Navbar from './navbar';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers, deleteUser, getAuthHeader } from '../api';
+import { getAllUsers, deleteUser } from '../api';
 
 const AdminPanel = () => {
   const [users, setUsers ] = useState([]);
@@ -48,6 +48,10 @@ const AdminPanel = () => {
       }
     }
   };
+
+  const navigateToChat = (user) => {
+    navigate(`/chat/${user.id}`, { state: { username: user.username}});
+  }
 
   // filter users based on search input
   const filteredUsers = users.filter(user => 
@@ -95,8 +99,14 @@ const AdminPanel = () => {
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>
-                  <FaEdit className="icon edit-icon" onClick={() => handleUpdateUser(user)} />
-                  <FaTrash className="icon delete-icon" onClick={() => handleDeleteUser(user)} />
+                  {user.username !== localStorage.getItem('username') && (
+                    <>
+                      <FaEdit className="icon edit-icon" onClick={() => handleUpdateUser(user)} />
+                      <FaTrash className="icon delete-icon" onClick={() => handleDeleteUser(user)} />
+                      <FaComments className="icon chat-icon" onClick={() => navigateToChat(user)} />
+                    </>
+                  )}
+                 
                 </td>
               </tr>
             ))}
