@@ -67,12 +67,10 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 SECRET_KEY: This is a secret key used to encode and decode the JWT token. Make sure to use a secure and random string for this value.
 
-3. in database.py, update the following if necessary
+3. In database.py, update the following with your MySQL credentials:
 ```
 URL_DATABASE = 'mysql+pymysql://root:mysql@localhost:3306/adminManagement'
 ```
-
-Replace them with your MySQL credentials.
 
 ### 5. Run the backend
 start the backend server using uvicorn:
