@@ -72,7 +72,7 @@ SECRET_KEY: This is a secret key used to encode and decode the JWT token. Make s
 URL_DATABASE = 'mysql+pymysql://root:mysql@localhost:3306/adminManagement'
 ```
 
-Replace your-username, your-password, and your-database-name with your MySQL credentials.
+Replace them with your MySQL credentials.
 
 ### 5. Run the backend
 start the backend server using uvicorn:
