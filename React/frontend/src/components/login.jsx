@@ -62,7 +62,7 @@ const Login = () => {
     <div>
       <div className="split left">
         <div className="centered">
-          <h1>Welcome Back</h1>
+          <h1>Welcome Back!</h1>
           <p>Log in to manage your admin dashboard</p>
         </div>
       </div>

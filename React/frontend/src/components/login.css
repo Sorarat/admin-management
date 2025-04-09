@@ -77,3 +77,66 @@
 .login-box button:hover {
   background-color: #1d4ed8;
 }
+
+@media (max-width: 768px) {
+  .split {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+
+  /* Center content adjustments */
+  .centered {
+    position: relative;
+    transform: translate(0, 0);
+    top: auto;
+    left: auto;
+    padding: 0 20px;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    box-shadow: none;
+  }
+
+  .login-box h2 {
+    font-size: 24px;
+  }
+
+  .login-box input {
+    font-size: 10px;
+  }
+
+  .login-box button {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .login-box form div {
+    margin-bottom: 12px;
+  }
+
+  /* For smaller screens */
+  .login-box label {
+    font-size: 12px;
+  }
+
+  .login-box input {
+    padding: 8px 2px 8px 2px;
+  }
+
+  body,
+  html,
+  #root {
+    overflow-x: hidden;
+  }
+}
