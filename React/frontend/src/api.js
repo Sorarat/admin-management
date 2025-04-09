@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 export const getAuthHeader = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("Token not found");
   }
