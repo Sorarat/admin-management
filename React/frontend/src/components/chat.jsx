@@ -36,7 +36,7 @@ useEffect(() => {
     if (input.trim() !== '') {
       ws.current.send(JSON.stringify({
         message: input,
-        sender: localStorage.getItem('username'), 
+        sender: sessionStorage.getItem('username'), 
       }));
       setInput('');
     }

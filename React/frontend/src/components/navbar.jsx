@@ -7,7 +7,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('username');  
     navigate('/');
   };
 
@@ -16,7 +17,7 @@ const Navbar = () => {
       <div className="logo">AdminForge</div>
       <div className="user-dropdown">
         <span className="username" onClick={() => setShowDropdown(!showDropdown)}>
-        {localStorage.getItem("username")} ▾
+        {sessionStorage.getItem("username")} ▾
         </span>
         {showDropdown && (
           <div className="dropdown-menu">

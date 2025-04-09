@@ -99,7 +99,7 @@ const AdminPanel = () => {
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>
-                  {user.username !== localStorage.getItem('username') && (
+                  {user.username !== sessionStorage.getItem('username') && (
                     <>
                       <FaEdit className="icon edit-icon" onClick={() => handleUpdateUser(user)} />
                       <FaTrash className="icon delete-icon" onClick={() => handleDeleteUser(user)} />
