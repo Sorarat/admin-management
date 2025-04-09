@@ -17,7 +17,7 @@ class UserService:
                 detail="Email already registered"
             )
         
-        #Create a new user and hash the password"""
+        # Create a new user and hash the password
         db_user = User(username=username, email=email, phone=phone)
         db_user.set_password(password) # hashing the password
         self.db.add(db_user)
