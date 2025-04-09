@@ -4,6 +4,8 @@ import './updateUser.css';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { updateUser } from '../api'; 
+import { IoMdArrowBack } from "react-icons/io";
+
 
 const UpdateUser = () => {
 
@@ -44,11 +46,18 @@ const UpdateUser = () => {
     }
   };
 
+  const goBack = () => {
+    navigate(-1); 
+  };
+
 
   return (
     <div className='add-new-user'>
       <Navbar/>
       <div className="form-container">
+      <button onClick={goBack} className="back-button">
+        <IoMdArrowBack size={25}/>
+      </button>
         <h2>Update User</h2>
         <form onSubmit={handleSubmit} className="user-form">
           <label>

@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useLocation} from 'react-router-dom';
 import './Chat.css';
+import { IoMdArrowBack } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Chat = () => {
   const { userId } = useParams();
@@ -9,6 +13,7 @@ const Chat = () => {
   const location = useLocation();
   const username = location.state?.username || '';
   const ws = useRef(null);
+  const navigate = useNavigate();
 
 useEffect(() => {
     ws.current = new WebSocket(`ws://localhost:8000/ws/${userId}`);
@@ -41,10 +46,19 @@ useEffect(() => {
       setInput('');
     }
   };
+
+
+  const goBack = () => {
+    navigate(-1); 
+  };
+  
   
 
   return (
     <div className="chat-container">
+      <button onClick={goBack} className="back-button">
+        <IoMdArrowBack size={25}/>
+      </button>
       <h2 className="chat-title">Chat with <strong>{username}</strong></h2>
       <div className="chat-box">
         {messages.map((msg, idx) => (
